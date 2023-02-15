@@ -123,9 +123,11 @@ nom_de_la_matiere <- str_to_upper("tlnf2ri1")
 nom_de_la_matiere
 semaine <- 'lundi mardi mercredi jeudi vendredi samedi dimanche'
 semaine <- str_to_title(semaine)
+semaine
 initiale <- c("lundi", "mardi", "mercredi", "jeudi", "vendredi", "samedi", "dimanche") |> 
     str_sub(start = 1, end = 3) |> 
     str_to_upper()
+initiale
 reponse <- fruit[str_detect(fruit, "c")] |>
     length()
 reponse
