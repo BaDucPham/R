@@ -111,6 +111,7 @@ tibble_6 <- tibble_6 |> mutate(age = 2023 - annee)
 # Q 2.3.4
 resultat <- summarise(tibble_6,somme = sum(annee),
 moyenne_d_age = mean(age))
+resultat
 
 
 
