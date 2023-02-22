@@ -146,8 +146,21 @@ p_f <- 0.5
 n_1 <- (s_a + p_f * f * s_j) * n_0
 n_2 <- (s_a + p_f * f * s_j) * n_1
 n_3 <- (s_a + p_f * f * s_j) * n_2
+```
+
+```{r}
+library(tidyverse)
+n_0 <- 10 # population à l'année 0
+s_a <- 0.5
+s_j <- 0.5
+f <- 6
+p_f <- 0.5
+n_1 <- (s_a + p_f * f * s_j) * n_0
+n_2 <- (s_a + p_f * f * s_j) * n_1
+n_3 <- (s_a + p_f * f * s_j) * n_2
 
 # Q 2.2.1
+library(tidyverse)
 raison <- s_a + p_f * f * s_j
  # Q 2.2.2
 donnee <- tibble(annee = 0:10)
@@ -157,4 +170,44 @@ print(evolution)
 # Q 2.2.4 La croissance de la population est exponentielle
 # Q 2.2.5
 head(evolution, n = 4)
+# Q 2.2.6 Oui
+resultat <- evolution |> 
+    head(n = 4) |> 
+    mutate(exo1 = c(n_0, n_1, n_2, n_3)) |> 
+    mutate(comparaison = exo1 == population) |> 
+    pull(comparaison) |> 
+    all()
+resultat
+```
+
+```{r}
+library(tidyverse)
+n_0 <− 10
+s_a <− 0.5
+s_j <− 0.5
+f <− 6
+p_f <− 0.5
+
+# Q 2.3.1
+f_seuil <− 2 ∗ (1 − s_a)/s_j
+# Q 2.3.2
+raison <− s_a + p_f ∗ f_seuil ∗ s_j
+# Q 2.3.3
+donnee <− tibble(annee = 0:10)
+# Q 2.3.4
+evolution <− mutate(donnee, population = n_0 ∗ raison^annee)
+evolution
+# Q 2.3.5
+summary(evolution)
+
+
+# Q 2.3.6 La population n'évolue pas
+
+resultat <- evolution |> 
+    mutate(avant = lag(population, default = 10)) |> 
+    mutate(comparaison = avant == population) |> 
+    summarise(calcul = all(comparaison)) |> 
+    pull()
+print(resultat)
+
 ```
