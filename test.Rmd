@@ -135,3 +135,26 @@ reponse
 ```
 C'est un peu comme paste() mais en plus élégant, on indique les chaînes de caractères et des variables que l'on colle.
 C'est une fonction qui permet, dans une chaîne de caractères, de remplacer la variable entre accolades par ce que contient la variable.
+
+
+```{r}
+n_0 <- 10 # population à l'année 0
+s_a <- 0.5
+s_j <- 0.5
+f <- 6
+p_f <- 0.5
+n_1 <- (s_a + p_f * f * s_j) * n_0
+n_2 <- (s_a + p_f * f * s_j) * n_1
+n_3 <- (s_a + p_f * f * s_j) * n_2
+
+# Q 2.2.1
+raison <- s_a + p_f * f * s_j
+ # Q 2.2.2
+donnee <- tibble(annee = 0:10)
+# Q 2.2.3
+evolution <- mutate(donnee, population = n_0 * raison^annee)
+print(evolution)
+# Q 2.2.4 La croissance de la population est exponentielle
+# Q 2.2.5
+head(evolution, n = 4)
+```
