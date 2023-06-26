@@ -1,0 +1,13 @@
+```{r}
+test <- 0
+autre <- 3
+5 * autre
+numero <- 16
+donnee <- 23
+valeur <- 7 * numero + donnee * 4
+print(valeur)
+```
+```{r}
+
+```
+
