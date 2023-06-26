@@ -1,0 +1,440 @@
+Hello
+
+Here is example for code 
+
+```{r}
+a <- c(4,5,13,6,20,24,22,7,9,12) 
+b <- c(85,160,1000,140,400,800,600,150,160,250) 
+a-b
+mean(a)
+mean(b)
+var_pop <- function(X) {
+    mean((X - mean(X))^2)
+}
+var_pop(a)
+var_pop(b)
+cov(a, b, method = "pearson")
+cor(a, b, method = "pearson")
+1686.778/sqrt(49.16*92052.25)
+
+
+```
+
+```{r}
+library(stats)
+
+wm <- function(a,w) {
+    n <- sum(w)
+    sum(a*w)/n
+}
+
+wvar <- function(a,w) {
+    n <- sum(w)
+    sum(w * (a - wm(a,w))^2)/n
+}
+
+wcov <- function(a,b,w) {
+    n <- sum(w)
+    sum(w*a*b)/n-wm(a,w)*wm(b,w)
+}
+
+wcor <- function(a,b,w) {
+    n <- sum(w)
+    vara <- wvar(a,w)
+    varb <- wvar(b,w)
+    covab <- wcov(a,b,w)
+    covab/(sqrt(vara*varb))
+}
+
+a <- c(4.8, 4.2, 5.6, 8.6, 4.6) #var 1
+b <- c(4.5, 0.5, 4.5, 5.5, 2.5) #var 2
+w <- c(3,5,4,3,2)               #effectifs
+wcov(a,b,w)
+wcor(a,b,w)
+cov(a, b, method = "pearson")
+cor(a, b, method = "pearson")
+
+
+```
+
+```{r}
+# Q 2.1.1
+library(tibble)
+# Q 2.1.2
+tibble(x = 1:7)
+# Q 2.1.3
+tibble_1 <- tibble(y = seq(from = 5, to = 26, by = 3))
+# Q 2.1.4
+vecteur <- seq(from = 4, to = 14, by = 5)
+# Q 2.1.5
+tibble_2 <- tibble(z = vecteur)
+# Q 2.1.6
+tibble_3 <- tibble(etudiant = c("Dominique", "Camille", "Maxence"),
+annee = c(2002, 2003, 2002),
+licence = c("SVT", "Math", "Info"))
+# Q 2.1.7
+tibble_4 <- tribble(~etudiant, ~annee, ~licence,"Morgane", 2001, "SVT")
+
+
+# disponible
+library(tibble)
+
+tibble_3 <- tibble(etudiant = c("Dominique", "Camille", "Maxence"),
+annee = c(2002, 2003, 2002),
+licence = c("SVT", "Math", "Info"))
+tibble_4 <- tribble(~etudiant, ~annee, ~licence,
+"Morgane", 2001, "SVT")
+
+ # Q 2.2.1
+tibble_3[4, 1] <- "Louison"
+# Q 2.2.2
+tibble_3[4, 2] <- 2002
+# Q 2.2.3
+print(tibble_3)
+# Q 2.2.4
+NA
+# Q 2.2.5
+library(dplyr)
+# Q 2.2.6
+tibble_5 <- bind_rows(tibble_3, tibble_4)
+# Q 2.2.7
+tail(arrange(tibble_5, annee), n = 1)
+# ou avec l'opérateur d'enchainement
+tibble_5 |> arrange(annee) |> tail(n = 1)
+tibble_5
+# Q 2.2.8
+resultat <- summarise(tibble_5, somme = sum(annee))
+
+# Q 2.3.1
+library(readr)
+# Q 2.3.2
+tibble_6 <- read_csv("debut_tibble_3.csv")
+# Q 2.3.3
+library(dplyr)
+tibble_6 <- tibble_6 |> mutate(age = 2023 - annee)
+# Q 2.3.4
+resultat <- summarise(tibble_6,somme = sum(annee),
+moyenne_d_age = mean(age))
+resultat
+
+
+
+
+```
+
+```{r}
+library(tidyverse)
+nom_de_la_matiere <- str_to_upper("tlnf2ri1")
+nom_de_la_matiere
+semaine <- 'lundi mardi mercredi jeudi vendredi samedi dimanche'
+semaine <- str_to_title(semaine)
+semaine
+initiale <- c("lundi", "mardi", "mercredi", "jeudi", "vendredi", "samedi", "dimanche") |> 
+    str_sub(start = 1, end = 3) |> 
+    str_to_upper()
+initiale
+reponse <- fruit[str_detect(fruit, "c")] |>
+    length()
+reponse
+```
+C'est un peu comme paste() mais en plus élégant, on indique les chaînes de caractères et des variables que l'on colle.
+C'est une fonction qui permet, dans une chaîne de caractères, de remplacer la variable entre accolades par ce que contient la variable.
+
+
+```{r}
+n_0 <- 10 # population à l'année 0
+s_a <- 0.5
+s_j <- 0.5
+f <- 6
+p_f <- 0.5
+n_1 <- (s_a + p_f * f * s_j) * n_0
+n_2 <- (s_a + p_f * f * s_j) * n_1
+n_3 <- (s_a + p_f * f * s_j) * n_2
+```
+
+```{r}
+library(tidyverse)
+n_0 <- 10 # population à l'année 0
+s_a <- 0.5
+s_j <- 0.5
+f <- 6
+p_f <- 0.5
+n_1 <- (s_a + p_f * f * s_j) * n_0
+n_2 <- (s_a + p_f * f * s_j) * n_1
+n_3 <- (s_a + p_f * f * s_j) * n_2
+
+# Q 2.2.1
+library(tidyverse)
+raison <- s_a + p_f * f * s_j
+ # Q 2.2.2
+donnee <- tibble(annee = 0:10)
+# Q 2.2.3
+evolution <- mutate(donnee, population = n_0 * raison^annee)
+print(evolution)
+# Q 2.2.4 La croissance de la population est exponentielle
+# Q 2.2.5
+head(evolution, n = 4)
+# Q 2.2.6 Oui
+resultat <- evolution |> 
+    head(n = 4) |> 
+    mutate(exo1 = c(n_0, n_1, n_2, n_3)) |> 
+    mutate(comparaison = exo1 == population) |> 
+    pull(comparaison) |> 
+    all()
+resultat
+```
+
+```{r}
+library(tidyverse)
+n_0 <− 10
+s_a <− 0.5
+s_j <− 0.5
+f <− 6
+p_f <− 0.5
+
+# Q 2.3.1
+f_seuil <− 2 ∗ (1 − s_a)/s_j
+# Q 2.3.2
+raison <− s_a + p_f ∗ f_seuil ∗ s_j
+# Q 2.3.3
+donnee <− tibble(annee = 0:10)
+# Q 2.3.4
+evolution <− mutate(donnee, population = n_0 ∗ raison^annee)
+evolution
+# Q 2.3.5
+summary(evolution)
+
+
+# Q 2.3.6 La population n'évolue pas
+
+resultat <- evolution |> 
+    mutate(avant = lag(population, default = 10)) |> 
+    mutate(comparaison = avant == population) |> 
+    summarise(calcul = all(comparaison)) |> 
+    pull()
+print(resultat)
+
+```
+
+```{r}
+library(ggplot2)
+load("passereau.Rdata")
+ggplot(passereau) + aes(x = annee, y = population, group = f) + geom_line() + geom_point()
+ggsave("suite_geom_ggplot_1.png")
+ggplot(passereau) + aes(x = annee, y = population, color = f) + geom_line() + geom_point()
+ggsave("suite_geom_ggplot_1.png")
+```
+
+```{r}
+library(tibble)
+library(dplyr)
+library(ggplot2)
+n_0 <- 10
+s_a <- 0.5
+s_j <- 0.5
+f <- 6
+p_f <- 0.5
+donnee <- tibble(annee = 0:10)
+f <- 2
+raison <- s_a + p_f * f * s_j
+evolution <- mutate(donnee, population = n_0 * raison^annee)
+evolution_0 <- mutate(evolution, f = f)
+
+f <- 2.5
+raison <- s_a + p_f * f * s_j
+evolution <- mutate(donnee, population = n_0 * raison^annee)
+evolution_1 <- mutate(evolution, f = f)
+print(evolution_1)
+
+f <- 0.75
+raison <- s_a + p_f * f * s_j
+evolution <- mutate(donnee, population = n_0 * raison^annee)
+evolution_2 <- mutate(evolution, f = f)
+
+modele <- bind_rows(evolution_0, evolution_1, evolution_2)
+print(modele, n = 33)
+
+ggplot(data = modele) + aes(x = annee, y = population, group = factor(f)) + geom_line() + geom_point()
+ggsave("suite_geom_ggplot_3.png")
+
+glimpse(modele)
+
+ggplot(data = modele) + aes(x = annee, y = population, color = factor(f)) + geom_line() + geom_point()
+ggsave("suite_geom_ggplot_4.png")
+
+
+```
+
+
+```{r}
+ library(tidyverse)
+
+n_0 <- 10
+s_a <- 0.5
+s_j <- 0.5
+f <- 1.7
+p_f <- 0.5
+raison_fixe <- s_a + p_f * f * s_j
+donnee <- tibble(annee = 0:20) %>% mutate(raison = s_a +1.01^annee * s_j * p_f * f )
+annee_vec <- pull(donnee, annee)
+raison_vec <- pull(donnee, raison)
+print(annee_vec)
+print(raison_vec)
+print(donnee)
+population = numeric(21)
+population[1] <- n_0
+for(annee in 1:20){
+    population[annee + 1] <- raison_vec[annee+1] * population[annee]
+}
+
+donnee <- donnee %>%
+    mutate(rechauffement = population) %>%
+    mutate(geometrique = n_0 * raison_fixe^annee) %>%
+    mutate(ecart = abs(rechauffement - geometrique)) %>%
+    pivot_longer(cols = c(rechauffement, geometrique),
+                values_to = "population",
+                names_to = "modele") %>%
+    mutate(modele = factor(modele,
+                            levels = c("rechauffement", "geometrique"),
+                            labels = c("Avec réchauffement climatique", "Sans réchauffement climatique")))
+
+
+ggplot(data = donnee) +
+    aes(x = annee,
+        y = population,
+        color = modele) +
+    geom_point() +
+    geom_line() +
+    theme(legend.position = "bottom") +
+    labs(color = "Modèle",
+        x = "Année",
+        y = "Population")
+ggsave("temps.png")
+
+valeur <- summarise(donnee, maximum = max(ecart)) %>%
+    pull(maximum)
+typeof(valeur) == "double"
+
+minimum <- donnee %>%
+    filter(modele == "Avec réchauffement climatique") %>%
+    slice_min(population)
+    
+print(minimum)
+
+
+```
+
+
+```{r}
+donnee_2 <- tibble(annee = 0:20) %>%
+    mutate(raison = s_a +1.01^annee * s_j * p_f * f ) %>%
+    mutate(rechauffement = accumulate(.x = raison[-1],
+                                    .f = prod,
+                                    .init = 10)) %>%
+    mutate(geometrique = n_0 * raison_fixe^annee) %>%
+    mutate(ecart = abs(rechauffement - geometrique)) %>%
+    pivot_longer(cols = c(rechauffement, geometrique),
+                values_to = "population",
+                names_to = "modele") %>%
+    mutate(modele = factor(modele,
+            levels = c("rechauffement", "geometrique"),
+            labels = c("Avec réchauffement climatique", "Sans réchauffement climatique")))
+print(donnee_2)
+```
+
+```{r}
+library(ggplot)
+n2000=read.csv("n2000.csv",header=TRUE,sep=";",encoding="latin1")
+kable(head(n2000,4))
+n2000$biogeo=as.factor(n2000$biogeo)
+levels(n2000$biogeo)=c("Alpine","Atlantique","Continentale","Méditerranéenne")
+skewness=function(x) return(mean((x-mean(x))^3)/(mean((x-mean(x))^2))^(3/2))
+
+colnames(n2000)
+quanti=n2000[,c(4:8,10:11)]
+head(quanti)
+summary(quanti)
+moyenne=apply(quanti,2,mean)
+print(moyenne)
+skewness(log(n2000$surf))
+hist(log(n2000$surf))
+hist(n2000$surf,breaks=c(0,500,1000,5000,100000,350000),xlab="Surface",ylab="Densité de fréquence",main="Natura 2000 : répartition des surfaces")
+boxplot(n2000$surf,ylab="Surface")
+
+```
+
+```{r}
+n2000=read.csv("n2000.csv",header=TRUE,sep=";",encoding="latin1")
+plot(n2000$activplus, n2000$activmoins, col = ifelse(n2000$biogeo == "Alpine", "blue",
+                                                      ifelse(n2000$biogeo == "Atlantique", "red",
+                                                             ifelse(n2000$biogeo == "Continentale", "green", "purple"))),
+     xlab = "Activplus", ylab = "Activmoins", main = "Zone Biogéologique")
+     
+legend(40, 30, legend = unique(n2000$biogeo), col = c("blue", "red", "green", "purple"), pch = 1, title = "Zone Biogéologique")
+reg <- lm(n2000$activmoins ~ n2000$activplus)
+abline(reg)
+
+```
+
+```{r}
+library(ggplot2)
+n2000=read.csv("n2000.csv",header=TRUE,sep=";",encoding="latin1")
+print(head(n2000$biogeo),4)
+```
+
+```{r}
+ggplot(data = n2000) +
+  aes(x = long,
+      y = lat,
+      color = factor(biogeo)) +
+  geom_point()
+
+ggplot(data = n2000) +
+  aes(x = long,
+      y = lat,
+      color = factor(biogeo)) +
+  geom_point()+
+  labs(colour="Région biogéo")
+
+hist(n2000$surf,breaks=c(0,500,1000,5000,100000,350000),xlab="Surface",ylab="Densité de fréquence",main="Natura 2000 : répartition des surfaces")
+eff=table(n2000$biogeo)
+eff
+cumsurf=tapply(n2000$surf,n2000$biogeo,sum)
+cumsurf
+effreq=cbind(effectifs=eff,fréquences=round(100*eff/sum(eff),digits=2))
+effreq
+tsurface=cbind(effectifs=cumsurf,fréquences=round(100*cumsurf/sum(cumsurf),digits=2))
+tsurface
+surf=data.frame(geobio=names(cumsurf),cumsurf)
+surf
+```
+
+```{r}
+barplot(table(n2000$biogeo),cex.names=0.6,las=2)
+# alternative
+ggplot(data=surf,aes(x=geobio))+
+  geom_bar()
+
+```
+
+```{r}
+n <- 400
+x <- 40
+alpha <- 0.05
+z_alpha_sur_2 <- qnorm(1 - alpha/2)
+
+p <- x/n
+marge_d_erreur <- z_alpha_sur_2 * sqrt((p*(1-p))/n)
+inter_conf <- c(p - marge_d_erreur, p + marge_d_erreur)
+print(paste("Intervalle de confiance au niveau", 1-alpha, ":", inter_conf))
+
+```
+
+```{r}
+plot(x,dt(x,4),type='l')
+abline(v=0)
+title("Densité de la loi de Student à 2 et 4 d.d.l.")
+lines(x,dt(x,2),col="red")
+legend(-3,0.35,paste(c(4,2),"degrés de liberté"),text.col=c("black","red"),col=c("black","red"),lty=1)
+```
+
